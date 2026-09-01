@@ -1,0 +1,133 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500;600;700&display=swap');
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    min-height: 100vh;
+}
+
+
+
+.hero {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    gap: 80px;
+    padding: 0 5%;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255)), url(bkg.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-card-containers,
+.hero-text {
+    width: auto;
+    flex: 1;
+    margin: 0 auto;
+}
+
+.hero-card-containers {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.hero-card {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 28px;
+    border-radius: 12px;
+    max-width: 330px;
+    margin: 0 auto;
+    backdrop-filter: blur(50px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #4299e1;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+    }
+
+    & .icon {
+        font-size: 48px;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    & .title {
+        text-align: center;
+        font-size: 22px;
+        color: #2d3748;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    & .description {
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        line-height: 1.6;
+        color: #4a5568;
+        text-align: center;
+    }
+}
+
+.hero-text {
+    color: white;
+
+    & h1 {
+        font-size: 56px;
+        text-align: center;
+        margin-bottom: 24px;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    & p {
+        font-size: 18px;
+        text-align: center;
+        line-height: 1.6;
+        opacity: 0.95;
+        margin-bottom: 8px;
+    }
+
+    & .cta-btns {
+        width: fit-content;
+        margin: 40px auto 0;
+
+        & a {
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        & a div {
+            padding: 14px 40px;
+            border-radius: 8px;
+            background-color: #4299e1;
+            color: white;
+            font-weight: 700;
+            font-family: 'Ubuntu', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
+            cursor: pointer;
+        }
+
+        & a div:hover {
+            background-color: #3182ce;
+            box-shadow: 0 8px 25px rgba(66, 153, 225, 0.6);
+            transform: translateY(-3px);
+        }
+
+        & a div:active {
+            transform: translateY(-1px);
+        }
+    }
+}
