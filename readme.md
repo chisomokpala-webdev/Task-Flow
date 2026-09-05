@@ -1,21 +1,51 @@
-Good question! Looking at your UI, here's what's missing from functionality:
+# Task Saver
 
-1. **Delete button (❌)** - The icon is there but clicking it does nothing. Should remove the task from the array and re-render.
+A simple and practical task management app built with HTML, CSS, and JavaScript. It helps users organize tasks, mark them complete, edit details, and keep everything saved in the browser.
 
-2. **Checkbox/Done button** - Has the checkbox input but no logic. Should mark tasks as complete and probably change their visual style.
+## Live Demo
 
-3. **Edit button (🖋)** - The icon exists but no edit functionality. Could either show a modal or inline editing.
+Open the app here:
 
-4. **Filter buttons** ("In Progress" & "Completed") - They're styled but don't filter the task list based on completion status.
+https://yourusername.github.io/your-repository-name/
 
-5. **Search bars** (by date & word) - Two inputs at the top but no search/filter logic implemented.
+## Features
 
-6. **Persistence** - Tasks disappear when you refresh the page. You'd need **localStorage** to save them.
+- Add new tasks with a title and description
+- Edit existing tasks
+- Mark tasks as completed or active
+- Delete tasks with confirmation
+- Filter between active and completed tasks
+- Track counts for each task category
+- Save data in localStorage for persistence
 
-7. **Task numbering** - When you delete a task, the numbers should update automatically.
+## Tech Stack
 
-8. **Visual feedback** - No way to visually distinguish between completed and in-progress tasks (maybe strikethrough, opacity, or color change).
+- HTML
+- CSS
+- JavaScript
+- LocalStorage
 
-**My suggestion:** Start with **delete** (simplest), then **checkbox/done status**, then **localStorage** (so tasks persist). Then tackle the filters and search.
+## Project Overview
 
-Start whichever one interests you most! 🚀
+This project is a lightweight productivity tool designed for everyday task tracking. It focuses on a clean interface, simple interactions, and reliable browser-based storage without requiring a backend.
+
+## How It Works
+
+- Add a task from the form
+- Edit any task when needed
+- Mark tasks complete to move them to the completed list
+- Delete tasks when they are no longer needed
+- Refresh the page and the task data remains saved
+
+## File Structure
+
+- index.html — landing page
+- tasks.html — task management page
+- tasks.css — app styling
+- tasks.js — task logic and localStorage behavior
+- index.css — landing page styling
+- index.js — landing page behavior
+
+## License
+
+This project is for personal and educational use.

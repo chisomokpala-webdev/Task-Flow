@@ -1,87 +1,142 @@
-// GLOBAL VARIABLES
+// =========================
+// Global references and app state
+// =========================
 let homePageredirect = document.getElementById("redirect")
 let taskTitleInput = document.querySelector('[name="title"]')
-let taskDescriptionInput = document.querySelector('[name="description"]')
+let taskDescriptionInput = document.querySelector('[name="desc"]')
 let form = document.querySelector(".input-field")
 let taskCont = document.querySelector(".tasks-container")
 let inProgressFilter = document.querySelector(".filters p:nth-child(1)")
 let completedFilter = document.querySelector(".filters p:nth-child(2)")
+let taskCountActive = document.getElementById("task-count-active")
+let taskCountCompleted = document.getElementById("task-count-completed")
 let makeSure = document.querySelector(".make-sure")
 let overlay = document.querySelector(".overlay")
 const byTitleSearch = document.querySelector('[name="search-by-letter"]')
 
+// Active and completed task collections
 let tasks = []
 let completed = []
 let recover = localStorage.getItem("saved")
 let recoverCompleted = localStorage.getItem("completed")
 
-// LOCAL STORAGE CODES
+// Update the floating task count badges
+function updateTaskCounters() {
+    taskCountActive.textContent = tasks.length
+    taskCountCompleted.textContent = completed.length
+
+    taskCountActive.style.display = tasks.length > 0 ? "inline-flex" : "none"
+    taskCountCompleted.style.display = completed.length > 0 ? "inline-flex" : "none"
+}
+
+// Save both task lists to localStorage so refreshes keep data
+function saveTasksState() {
+    localStorage.setItem("saved", JSON.stringify(tasks))
+    localStorage.setItem("completed", JSON.stringify(completed))
+}
+
+// Clear and re-render the visible task list depending on the current filter
+function refreshTaskView() {
+    taskCont.innerHTML = ""
+
+    if (completedFilter.classList.contains("active")) {
+        createCompletedTask()
+    } else {
+        createTask()
+    }
+
+    updateTaskCounters()
+}
+
+// Restore saved data from localStorage when the page loads
 if (recoverCompleted !== null) {
     completed = JSON.parse(recoverCompleted)
-    taskCont.innerHTML = ""
-    createCompletedTask()
 }
 if (recover !== null) {
     tasks = JSON.parse(recover)
-    taskCont.innerHTML = ""
+}
+
+// Default view is the active tasks list
+inProgressFilter.classList.add("active")
+completedFilter.classList.remove("active")
+
+if (tasks.length > 0) {
     createTask()
-    inProgressFilter.classList.add("active")
-    completedFilter.classList.remove("active")
 } else {
-    inProgressFilter.classList.add("active")
-    completedFilter.classList.remove("active")
     const emptyStatePlaceholder = document.createElement("h2")
     emptyStatePlaceholder.className = "none"
-    emptyStatePlaceholder.textContent = "No Tasks in Progress"
+    emptyStatePlaceholder.textContent = "No Active Tasks"
     taskCont.appendChild(emptyStatePlaceholder)
 }
 
+updateTaskCounters()
 
-// CODE BLOCK TO ADD A NEW TASK
+
+// Show the custom modal message used for validation feedback
+function showCustomPopUp(message) {
+    const modal = document.querySelector("#myModal")
+
+    const modalMessage = modal.querySelector("#modalmessage")
+
+    modalMessage.textContent = message
+    modal.showModal();
+
+    modal.addEventListener("click", event => {
+        event.preventDefault()
+        if (event.target.matches("button")) {
+            modal.close()
+        }
+    })
+}
+
+// Add a new task from the form and immediately refresh the view
 form.addEventListener("submit", event => {
     event.preventDefault()
 
-    if (taskTitleInput.value === "" || taskDescriptionInput.value === "") {
-        console.log("Fill all");
-        return
+
+    if (taskTitleInput.value.trim() === "" && taskDescriptionInput.value.trim() === "") {
+        return showCustomPopUp("Sorry, you can't add an empty task")
+    }
+
+    if (taskDescriptionInput.value.trim() === "") {
+        return showCustomPopUp("Sorry, you can't add a task without a description")
+
+    }
+
+    if (taskTitleInput.value.trim() === "") {
+        return showCustomPopUp("Sorry, you can't add a task without a title")
     }
 
     const formData = new FormData(form)
 
     const newTask = {
         title: formData.get("title"),
-        desc: formData.get("description")
+        desc: formData.get("desc")
     }
 
     tasks.push(newTask)
-    console.log(tasks);
 
-    // form.reset()
-
-    taskCont.innerHTML = ""
-
-    createTask()
-
-
-
-    const savedTasks = JSON.stringify(tasks)
-    localStorage.setItem("saved", savedTasks)
+    saveTasksState()
+    refreshTaskView()
+    form.reset()
 
 })
 
-// CODE BLOCK THAT CALLS THE FUNCTION TO DISPLAY ACTIVE TASKS
+// Switch to the active task list when the filter is clicked
 inProgressFilter.addEventListener("click", () => {
-    taskCont.innerHTML = ""
-    createTask()
+    inProgressFilter.classList.add("active")
+    completedFilter.classList.remove("active")
+    refreshTaskView()
 })
 
-// CODE BLOCK THAT CALLS THE FUNCTION TO DISPLAY COMPLETED TASKS
+// Switch to the completed task list when the filter is clicked
 completedFilter.addEventListener("click", () => {
-    taskCont.innerHTML = ""
-    createCompletedTask()
+    completedFilter.classList.add("active")
+    inProgressFilter.classList.remove("active")
+    refreshTaskView()
 })
 
-// CODE BLOCK TO PRINT ACTIVE TASKS TO THE DOM
+// Render all active tasks into the list container
 function createTask() {
     inProgressFilter.classList.add("active")
     completedFilter.classList.remove("active")
@@ -101,21 +156,15 @@ function createTask() {
         middle.className = "middle"
         const firstMiddleP = document.createElement("p")
         firstMiddleP.textContent = task.title
-        // middle.appendChild(firstMiddleP)
-        console.log(firstMiddleP);
 
 
         const line = document.createElement("div")
         line.className = "line"
-        // middle.appendChild(line)
-        console.log(line);
 
 
         const secondMiddleP = document.createElement("p")
         secondMiddleP.textContent = task.desc
-        console.log(secondMiddleP);
         middle.append(firstMiddleP, line, secondMiddleP)
-        console.log(middle);
 
 
         const icons = document.createElement("div")
@@ -124,17 +173,14 @@ function createTask() {
         check.setAttribute("type", "checkbox")
         check.setAttribute("name", "done")
         check.checked = false;
-        // icons.appendChild(check)
         const edit = document.createElement("span")
         edit.innerHTML = '<i class="fas fa-pen"></i>'
         edit.setAttribute("edit-index", index)
-        // icons.appendChild(edit)
         const del = document.createElement("span")
         del.innerHTML = '<i class="fas fa-trash"></i>'
         del.className = "delete"
         del.setAttribute("data-index", index)
         icons.append(check, edit, del)
-        console.log(icons);
 
 
 
@@ -149,7 +195,7 @@ function createTask() {
         //     createTask()
         // })
 
-        edit.addEventListener("click", () => {
+        edit.addEventListener("click", (event) => {
             const taskIndex = edit.getAttribute("edit-index")
             const formEdit = overlay.querySelector(".edit")
 
@@ -160,6 +206,13 @@ function createTask() {
 
             newFormEdit.querySelector('[name="title-edit"]').value = task.title
             newFormEdit.querySelector('[name="description-edit"]').value = task.desc
+
+
+            newFormEdit.addEventListener("click", event => {
+                if (event.target.matches("p")) {
+                    return overlay.classList.remove("active")
+                }
+            })
 
             newFormEdit.addEventListener("submit", event => {
                 event.preventDefault()
@@ -174,13 +227,9 @@ function createTask() {
                     desc: formData.get("description-edit")
                 }
 
-                localStorage.setItem("saved", JSON.stringify(tasks))
-
-                taskCont.innerHTML = ""
-
+                saveTasksState()
                 overlay.classList.remove("active")
-
-                createTask()
+                refreshTaskView()
             })
 
         })
@@ -200,11 +249,9 @@ function createTask() {
 
             newConfirmBtn.addEventListener("click", () => {
                 tasks.splice(taskIndex, 1)
-                // rest of code
-                localStorage.setItem("saved", JSON.stringify(tasks))
-                taskCont.innerHTML = ""
-                createTask()
+                saveTasksState()
                 makeSure.classList.remove("active")
+                refreshTaskView()
             })
 
             makeSure.querySelector("#cancel-delete").addEventListener("click", () => {
@@ -213,39 +260,31 @@ function createTask() {
         })
 
         check.addEventListener("click", () => {
-
-            if (check.checked) {
-                completed.push(task)
-                tasks.splice(index, 1)
-                localStorage.setItem("saved", JSON.stringify(tasks))
-                localStorage.setItem("completed", JSON.stringify(completed))
-                taskCont.innerHTML = ""
-                // tasksHouse.style.opacity = "0.5"
-                // check.checked = true;
-                createTask()
-            } else {
+            if (completedFilter.classList.contains("active")) {
                 tasks.push(task)
                 completed.splice(index, 1)
-                localStorage.setItem("saved", JSON.stringify(tasks))
-                localStorage.setItem("completed", JSON.stringify(completed))
-                taskCont.innerHTML = ""
-                // tasksHouse.style.opacity = "1"
-                // check.checked = false;
-                createTask()
+            } else {
+                completed.push(task)
+                tasks.splice(index, 1)
             }
+
+            saveTasksState()
+            refreshTaskView()
         })
     })
+
+    updateTaskCounters()
 
     if (taskCont.childNodes.length === 0) {
         const emptyStatePlaceholder = document.createElement("h2")
         emptyStatePlaceholder.className = "none"
-        emptyStatePlaceholder.textContent = "No Tasks in Progress"
+        emptyStatePlaceholder.textContent = "No Active Tasks"
         taskCont.appendChild(emptyStatePlaceholder)
     }
 
 }
 
-// CODE BLOCK TO PRINT COMPLETED TASKS TO THE DOM
+// Render all completed tasks into the list container
 function createCompletedTask() {
     completedFilter.classList.add("active")
     inProgressFilter.classList.remove("active")
@@ -264,21 +303,15 @@ function createCompletedTask() {
         middle.className = "middle"
         const firstMiddleP = document.createElement("p")
         firstMiddleP.textContent = task.title
-        // middle.appendChild(firstMiddleP)
-        console.log(firstMiddleP);
 
 
         const line = document.createElement("div")
         line.className = "line"
-        // middle.appendChild(line)
-        console.log(line);
 
 
         const secondMiddleP = document.createElement("p")
         secondMiddleP.textContent = task.desc
-        console.log(secondMiddleP);
         middle.append(firstMiddleP, line, secondMiddleP)
-        console.log(middle);
 
 
         const icons = document.createElement("div")
@@ -287,17 +320,14 @@ function createCompletedTask() {
         check.setAttribute("type", "checkbox")
         check.setAttribute("name", "done")
         check.checked = true
-        // icons.appendChild(check)
         const edit = document.createElement("span")
         edit.innerHTML = '<i class="fas fa-pen"></i>'
         edit.setAttribute("edit-index-2", index)
-        // icons.appendChild(edit)
         const del = document.createElement("span")
         del.innerHTML = '<i class="fas fa-trash"></i>'
         del.className = "delete"
         del.setAttribute("data-index-2", index)
         icons.append(check, edit, del)
-        console.log(icons);
 
 
 
@@ -316,45 +346,7 @@ function createCompletedTask() {
         // })
 
         edit.addEventListener("click", () => {
-
-            console.log("Completed Tasks can't be edited.");
-
-            // const taskIndex = edit.getAttribute("edit-index-2")
-            // const formEdit = overlay.querySelector(".edit")
-
-            // const newFormEdit = formEdit.cloneNode(true)
-            // formEdit.parentNode.replaceChild(newFormEdit, formEdit)
-
-            // overlay.classList.add("active")
-
-            // newFormEdit.querySelector('[name="title-edit"]').value = task.title
-            // newFormEdit.querySelector('[name="description-edit"]').value = task.desc
-
-            // console.log(completed);
-
-
-            // newFormEdit.addEventListener("submit", event => {
-            //     event.preventDefault()
-
-            //     const formData = new FormData(newFormEdit)
-
-            //     formData.get("title-edit");
-            //     formData.get("description-edit");
-
-            //     completed[taskIndex] = {
-            //         title: formData.get("title-edit"),
-            //         desc: formData.get("description-edit")
-            //     }
-
-            //     localStorage.setItem("completed", JSON.stringify(completed))
-
-            //     taskCont.innerHTML = ""
-
-            //     overlay.classList.remove("active")
-
-            //     createCompletedTask()
-            // })
-
+            showCustomPopUp("Completed tasks can't be deleted")
         })
 
         del.addEventListener("click", () => {
@@ -371,11 +363,9 @@ function createCompletedTask() {
 
             newConfirmBtn.addEventListener("click", () => {
                 completed.splice(taskIndex, 1)
-                // rest of code
-                localStorage.setItem("completed", JSON.stringify(completed))
-                taskCont.innerHTML = ""
-                createCompletedTask()
+                saveTasksState()
                 makeSure.classList.remove("active")
+                refreshTaskView()
             })
 
             makeSure.querySelector("#cancel-delete").addEventListener("click", () => {
@@ -385,25 +375,20 @@ function createCompletedTask() {
 
 
         check.addEventListener("click", () => {
-            if (check.checked) {
-                completed.push(task)
-                tasks.splice(index, 1)
-                localStorage.setItem("saved", JSON.stringify(tasks))
-                localStorage.setItem("completed", JSON.stringify(completed))
-                taskCont.innerHTML = ""
-                // tasksHouse.style.opacity = "0.5"
-                createCompletedTask()
-            } else {
+            if (completedFilter.classList.contains("active")) {
                 tasks.push(task)
                 completed.splice(index, 1)
-                localStorage.setItem("saved", JSON.stringify(tasks))
-                localStorage.setItem("completed", JSON.stringify(completed))
-                taskCont.innerHTML = ""
-                // tasksHouse.style.opacity = "1"
-                createCompletedTask()
+            } else {
+                completed.push(task)
+                tasks.splice(index, 1)
             }
+
+            saveTasksState()
+            refreshTaskView()
         })
     })
+
+    updateTaskCounters()
 
     if (taskCont.innerHTML === "") {
         const emptyStatePlaceholder = document.createElement("h2")
@@ -413,7 +398,7 @@ function createCompletedTask() {
     }
 }
 
-// CODE BLOCK TO REDIRECT TO THE HOMEPAGE
+// Return to the homepage from the task page
 homePageredirect.addEventListener("click", event => {
     event.preventDefault()
 

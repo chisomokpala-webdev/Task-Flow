@@ -1,5 +1,7 @@
+// Redirect button for the homepage hero section
 let redirectToTasks = document.getElementById("redirect")
 
+// Navigate to the tasks page when the CTA is clicked
 redirectToTasks.addEventListener("click", event =>{
     event.preventDefault()
 

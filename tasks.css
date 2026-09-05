@@ -1,3 +1,6 @@
+/* =========================
+   Global reset and base styles
+   ========================= */
 * {
     padding: 0;
     margin: 0;
@@ -13,6 +16,49 @@ body {
     font-family: 'Caveat', cursive;
     background-color: #f5f5f5;
     width: 100%;
+}
+
+/* =========================
+   Modal and overlay styles
+   ========================= */
+
+dialog:not([open]) {
+    display: none;
+}
+
+dialog[open] {
+    width: 90%;
+    max-width: 400px;
+    outline: none;
+    border: none;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 0%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+    p{
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-indent: 10px;
+    }
+
+    & button{
+        margin-top: 20px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        background-color: #4299e1;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        font-family: 'Caveat', cursive;
+        width: 50%;
+        margin: 0 auto;
+    }
 }
 
 .overlay {
@@ -148,6 +194,9 @@ body {
     pointer-events: all;
 }
 
+/* =========================
+   Header and page layout
+   ========================= */
 header {
     padding: 20px;
     background-color: #2d3748;
@@ -197,6 +246,9 @@ main {
     gap: 20px;
 }
 
+/* =========================
+   Add task form styles
+   ========================= */
 aside {
     flex: 1;
     background-color: #ffffff;
@@ -282,6 +334,9 @@ aside {
 
 }
 
+/* =========================
+   Task list and filters
+   ========================= */
 .tasks-section {
     flex: 3;
     min-height: 0;
@@ -323,22 +378,69 @@ aside {
 
         & .filters {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: center;
         }
 
-        & .filters p {
-            padding: 8px 16px;
+        & .filter-item {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px 10px 14px;
             background-color: #edf2f7;
-            border-radius: 6px;
+            border-radius: 999px;
             font-size: 14px;
             cursor: pointer;
             color: #4a5568;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+            padding-right: 22px;
+        }
+
+        & .filter-item:hover {
+            transform: translateY(-1px);
+        }
+
+        & .filter-label {
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        & .task-count-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            min-width: 24px;
+            height: 24px;
+            padding: 0 8px;
+            border-radius: 999px;
+            background-color: #bbb;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255,255,255,0.9);
+            line-height: 1;
+            z-index: 2;
         }
 
         & .filters p.active {
             background-color: #4299e1;
             color: white;
+            border-color: #2b6cb0;
+            box-shadow: 0 10px 18px rgba(66, 153, 225, 0.2);
+        }
+
+        & .filters p.active .task-count-badge {
+            background: linear-gradient(135deg, #ffffff, #dbeafe);
+            color: #1d4ed8;
+            border-color: rgba(29, 78, 216, 0.2);
+            box-shadow: 0 6px 14px rgba(255,255,255,0.25);
         }
     }
 
@@ -471,6 +573,9 @@ aside {
     }
 }
 
+/* =========================
+   Animation for buttons
+   ========================= */
 @keyframes glow {
     0% {
         box-shadow: 0 4px 15px rgba(66, 153, 225, 0.5);
