@@ -1,4 +1,4 @@
-# Task Saver
+# Task Flow
 
 A simple and practical task management app built with HTML, CSS, and JavaScript. It helps users organize tasks, mark them complete, edit details, and keep everything saved in the browser.
 
@@ -40,11 +40,12 @@ This project is a lightweight productivity tool designed for everyday task track
 ## File Structure
 
 - index.html — landing page
+- index.css — landing page styling
+- index.js — landing page behavior
 - tasks.html — task management page
 - tasks.css — app styling
 - tasks.js — task logic and localStorage behavior
-- index.css — landing page styling
-- index.js — landing page behavior
+
 
 ## License
 

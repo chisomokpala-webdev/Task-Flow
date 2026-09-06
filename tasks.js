@@ -188,12 +188,6 @@ function createTask() {
 
         taskCont.appendChild(tasksHouse)
 
-        // del.addEventListener("click", () => {
-        //     tasks.splice(pendingDeleteIndex, 1)
-        //     localStorage.setItem("saved", JSON.stringify(tasks))
-        //     taskCont.innerHTML = ""
-        //     createTask()
-        // })
 
         edit.addEventListener("click", (event) => {
             const taskIndex = edit.getAttribute("edit-index")
@@ -334,16 +328,6 @@ function createCompletedTask() {
         tasksHouse.append(number, middle, icons)
 
         taskCont.appendChild(tasksHouse)
-
-
-
-        // del.addEventListener("click", () => {
-        //     const completedIndex = del.getAttribute("data-index")
-        //     completed.splice(completedIndex, 1)
-        //     localStorage.setItem("completed", JSON.stringify(completed))
-        //     taskCont.innerHTML = ""
-        //     createCompletedTask()
-        // })
 
         edit.addEventListener("click", () => {
             showCustomPopUp("Completed tasks can't be deleted")
