@@ -12,7 +12,9 @@ let taskCountActive = document.getElementById("task-count-active")
 let taskCountCompleted = document.getElementById("task-count-completed")
 let makeSure = document.querySelector(".make-sure")
 let overlay = document.querySelector(".overlay")
-const byTitleSearch = document.querySelector('[name="search-by-letter"]')
+let addNewTask = document.querySelector(".add-new-task")
+let formOverlay = document.querySelector("aside")
+
 
 // Active and completed task collections
 let tasks = []
@@ -90,6 +92,20 @@ function showCustomPopUp(message) {
 }
 
 // Add a new task from the form and immediately refresh the view
+addNewTask.addEventListener("click", event => {
+    console.log("yaya");
+
+    formOverlay.classList.add("active")
+    console.log(formOverlay.classList);
+
+})
+
+form.addEventListener("click", event => {
+    if (event.target.matches("p")) {
+        formOverlay.classList.remove("active")
+    }
+})
+
 form.addEventListener("submit", event => {
     event.preventDefault()
 
@@ -105,6 +121,10 @@ form.addEventListener("submit", event => {
 
     if (taskTitleInput.value.trim() === "") {
         return showCustomPopUp("Sorry, you can't add a task without a title")
+    }
+
+    if (window.innerWidth <= 768) {
+        formOverlay.classList.remove("active")
     }
 
     const formData = new FormData(form)
@@ -210,6 +230,19 @@ function createTask() {
 
             newFormEdit.addEventListener("submit", event => {
                 event.preventDefault()
+
+                if (newFormEdit.querySelector('[name="title-edit"]').value.trim() === "" && newFormEdit.querySelector('[name="description-edit"]').value.trim() === "") {
+                    return showCustomPopUp("Sorry, you can't add an empty task edit")
+                }
+
+                if (newFormEdit.querySelector('[name="description-edit"]').value.trim() === "") {
+                    return showCustomPopUp("Sorry, you can't add a task without a description edit")
+
+                }
+
+                if (newFormEdit.querySelector('[name="title-edit"]').value.trim() === "") {
+                    return showCustomPopUp("Sorry, you can't add a task without a title edit")
+                }
 
                 const formData = new FormData(newFormEdit)
 

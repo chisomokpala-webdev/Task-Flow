@@ -30,6 +30,7 @@ body {
     background-position: center;
 }
 
+
 .hero-card-containers,
 .hero-text {
     width: auto;
@@ -113,7 +114,7 @@ body {
         }
 
         & a div {
-            padding: 0.875rem 2.5rem;
+            padding: 1.3rem 2.5rem;
             border-radius: 0.5rem;
             background-color: #4299e1;
             color: white;
@@ -133,5 +134,15 @@ body {
         & a div:active {
             transform: translateY(-0.0625rem);
         }
+    }
+}
+
+/* Responsive design */
+@media screen and (max-width: 700px) {
+    .hero {
+        flex-direction: column-reverse;
+        gap: 5rem;
+        padding: 5rem 2rem;
+        height: 100%;
     }
 }
