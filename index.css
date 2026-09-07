@@ -25,7 +25,7 @@ body {
     width: 100%;
     gap: 5rem;
     padding: 0 5%;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.42), rgba(15, 23, 42, 0.2)), url(images/bkg.jpg);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.42), rgba(15, 23, 42, 0.2)), url(./Assets/Images/bkg.jpg);
     background-size: cover;
     background-position: center;
 }

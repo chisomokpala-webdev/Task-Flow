@@ -420,7 +420,7 @@ homePageredirect.addEventListener("click", event => {
     event.preventDefault()
 
     if (event.target.matches("a")) {
-        window.location.replace("index.html")
+        window.location.replace("../index.html")
     }
 })
 

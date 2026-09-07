@@ -6,6 +6,6 @@ redirectToTasks.addEventListener("click", event =>{
     event.preventDefault()
 
     if (event.target.matches("a div")) {
-        window.location.replace("tasks.html")
+        window.location.replace("/Tasks-Page-Folder/tasks.html")
     }
 })
