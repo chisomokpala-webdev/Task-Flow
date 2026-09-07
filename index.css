@@ -25,7 +25,7 @@ body {
     justify-content: center;
     width: 100%;
     gap: 5rem;
-    padding: 5%;
+    padding: 15%;
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.42), rgb(15, 23, 42)), url(./Assets/Images/bkg.jpg);
     background-size: cover;
     background-position: center;
@@ -57,34 +57,33 @@ body {
     box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
     border-left: 0.25rem solid #4299e1;
     transition: transform 0.3s, box-shadow 0.3s;
+}
 
+.hero-card .description {
+    font-size: 1rem;
+    letter-spacing: 0.01875rem;
+    line-height: 1.6;
+    color: #4a5568;
+    text-align: center;
+}
 
-    &:hover {
-        transform: translateY(-0.5rem);
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
-    }
+.hero-card:hover {
+    transform: translateY(-0.5rem);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
+}
 
-    & .icon {
-        font-size: 3rem;
-        margin-bottom: 0.75rem;
-        display: block;
-    }
+.hero-card .icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+    display: block;
+}
 
-    & .title {
-        text-align: center;
-        font-size: 1.3rem;
-        color: #2d3748;
-        font-weight: 600;
-        margin-bottom: 0.625rem;
-    }
-
-    & .description {
-        font-size: 1rem;
-        letter-spacing: 0.01875rem;
-        line-height: 1.6;
-        color: #4a5568;
-        text-align: center;
-    }
+.hero-card .title {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #2d3748;
+    font-weight: 600;
+    margin-bottom: 0.625rem;
 }
 
 .hero-text {
@@ -92,53 +91,55 @@ body {
     width: 100%;
     flex-shrink: 1;
 
-    & h1 {
-        font-size: 3.5rem;
-        text-align: center;
-        margin-bottom: 1.5rem;
-        font-weight: 700;
-        text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
-    }
+}
 
-    & p {
-        font-size: 1.3rem;
-        text-align: center;
-        line-height: 1.6;
-        opacity: 0.95;
-        margin-bottom: 0.5rem;
-    }
+.hero-text .cta-btns a div:hover {
+    background-color: #3182ce;
+    box-shadow: 0 0.5rem 1.5625rem rgba(66, 153, 225, 0.6);
+    transform: translateY(-0.1875rem);
+}
 
-    & .cta-btns {
-        width: fit-content;
-        margin: 2.5rem auto 0;
+.hero-text .cta-btns a div:active {
+    transform: translateY(-0.0625rem);
+}
 
-        & a {
-            text-decoration: none;
-            font-size: 1.125rem;
-        }
 
-        & a div {
-            padding: 1.3rem 2.5rem;
-            border-radius: 0.5rem;
-            background-color: #4299e1;
-            color: white;
-            font-weight: 700;
-            font-family: 'Ubuntu', sans-serif;
-            transition: all 0.3s ease;
-            box-shadow: 0 0.25rem 0.9375rem rgba(66, 153, 225, 0.4);
-            cursor: pointer;
-        }
+.hero-text h1 {
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+}
 
-        & a div:hover {
-            background-color: #3182ce;
-            box-shadow: 0 0.5rem 1.5625rem rgba(66, 153, 225, 0.6);
-            transform: translateY(-0.1875rem);
-        }
+.hero-text p {
+    font-size: 1.3rem;
+    text-align: center;
+    line-height: 1.6;
+    opacity: 0.95;
+    margin-bottom: 0.5rem;
+}
 
-        & a div:active {
-            transform: translateY(-0.0625rem);
-        }
-    }
+.hero-text .cta-btns {
+    width: fit-content;
+    margin: 2.5rem auto 0;
+}
+
+.hero-text .cta-btns a {
+    text-decoration: none;
+    font-size: 1.125rem;
+}
+
+.hero-text .cta-btns a div {
+    padding: 1.3rem 2.5rem;
+    border-radius: 0.5rem;
+    background-color: #4299e1;
+    color: white;
+    font-weight: 700;
+    font-family: 'Ubuntu', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 0.25rem 0.9375rem rgba(66, 153, 225, 0.4);
+    cursor: pointer;
 }
 
 /* Responsive design */
@@ -156,8 +157,8 @@ body {
     }
 }
 
-@media screen and (max-width: 960px) and (max-height: 600px) {
-    .hero{
+@media screen and (max-width: 960px) and (max-height: 685px) {
+    .hero {
         height: 100%;
     }
 }
