@@ -341,11 +341,14 @@ main aside .input-field .inputs {
 
 main aside .input-field .inputs .character-control-field {
     display: flex;
-    font-size: 0.75rem;
     justify-content: space-between;
     flex-direction: row-reverse;
     color: #2d3748;
 }
+main aside .input-field .inputs .character-control-field p{
+    font-size: 0.75rem;
+}
+
 
 main aside .input-field .inputs .character-control-field .title-warning {
     display: none;
@@ -875,6 +878,10 @@ aside .input-field .close {
 
 
 @media screen and (max-width: 768px) {
+
+    main aside .input-field .inputs .character-control-field p{
+        font-size: 0.75rem;
+    }
 
     body .make-sure .btn-area {
         gap: 10px;

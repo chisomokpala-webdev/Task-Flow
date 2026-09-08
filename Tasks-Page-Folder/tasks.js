@@ -175,6 +175,8 @@ submitButtonArea.addEventListener("click", () => {
 form.addEventListener("click", event => {
     if (event.target.matches(".close")) {
         formOverlay.classList.remove("active")
+        taskDescriptionInput.value = ""
+        taskTitleInput.value = ""
     }
 })
 
@@ -197,9 +199,6 @@ form.addEventListener("submit", event => {
         return showCustomPopUp("Sorry, you can't add a task without a title")
     }
 
-    if (window.innerWidth <= 768) {
-        formOverlay.classList.remove("active")
-    }
 
     if (taskDescriptionInput.value.trim().length > 250) {
         pulseDescriptionWarning()
@@ -209,6 +208,10 @@ form.addEventListener("submit", event => {
     if (taskTitleInput.value.trim().length > 60) {
         pulseTitleWarning()
         return
+    }
+
+    if (window.innerWidth <= 768) {
+        formOverlay.classList.remove("active")
     }
 
     const formData = new FormData(form)
