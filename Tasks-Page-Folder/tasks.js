@@ -14,7 +14,12 @@ let makeSure = document.querySelector(".make-sure")
 let overlay = document.querySelector(".overlay")
 let addNewTask = document.querySelector(".add-new-task")
 let formOverlay = document.querySelector("aside")
-
+const submitButton = form.querySelector('button[type="submit"]')
+const submitButtonArea = form.querySelector(".btn-area")
+const countTitle = document.querySelector("#countTitle")
+const countDesc = document.querySelector("#countDescription")
+const titleWarning = document.querySelector(".title-warning")
+const DescWarning = document.querySelector(".desc-warning")
 
 // Active and completed task collections
 let tasks = []
@@ -91,23 +96,92 @@ function showCustomPopUp(message) {
     })
 }
 
+function pulseDescriptionWarning() {
+    DescWarning.classList.remove("warning-pulse")
+    void DescWarning.offsetWidth
+    DescWarning.classList.add("warning-pulse")
+}
+
+function pulseTitleWarning() {
+    titleWarning.classList.remove("warning-pulse")
+    void titleWarning.offsetWidth
+    titleWarning.classList.add("warning-pulse")
+}
+
 // Add a new task from the form and immediately refresh the view
 addNewTask.addEventListener("click", event => {
-    console.log("yaya");
+    // console.log("yaya");
 
     formOverlay.classList.add("active")
-    console.log(formOverlay.classList);
+    // console.log(formOverlay.classList);
+})
 
+let taskTitleInputCount = 0;
+
+
+taskTitleInput.addEventListener(("input"), event => {
+    // console.log(event.target.value.trim(), event.target.value.trim().length);
+    taskTitleInputCount = event.target.value.trim().length
+    countTitle.textContent = taskTitleInputCount
+    // console.log("Current Count is ", taskTitleInputCount);
+
+    if (countTitle.textContent > 60) {
+        countTitle.style.color = "rgb(162, 0, 0)"
+        titleWarning.style.display = "block"
+        submitButton.style.pointerEvents = "none"
+        submitButtonArea.classList.add("blocked")
+
+    } else {
+        countTitle.style.color = "#2d3748"
+        titleWarning.style.display = "none"
+        submitButton.style.pointerEvents = "auto"
+        submitButtonArea.classList.remove("blocked")
+        titleWarning.classList.remove("warning-pulse")
+    }
+})
+
+let taskDescriptionInputCount = 0;
+
+taskDescriptionInput.addEventListener(("input"), event => {
+    // console.log(taskDescriptionInputCount);
+    taskDescriptionInputCount = event.target.value.trim().length
+    countDesc.textContent = taskDescriptionInputCount
+    // console.log(taskDescriptionInputCount);
+
+    if (countDesc.textContent > 250) {
+        countDesc.style.color = "rgb(162, 0, 0)"
+        DescWarning.style.display = "block"
+        submitButton.style.pointerEvents = "none"
+        submitButtonArea.classList.add("blocked")
+
+    } else {
+        countDesc.style.color = "#2d3748"
+        DescWarning.style.display = "none"
+        submitButton.style.pointerEvents = "auto"
+        submitButtonArea.classList.remove("blocked")
+        DescWarning.classList.remove("warning-pulse")
+    }
+})
+
+submitButtonArea.addEventListener("click", () => {
+    if (taskDescriptionInput.value.trim().length > 250) {
+        pulseDescriptionWarning()
+    }
+    if (taskTitleInput.value.trim().length > 60) {
+        pulseTitleWarning()
+    }
 })
 
 form.addEventListener("click", event => {
-    if (event.target.matches("p")) {
+    if (event.target.matches(".close")) {
         formOverlay.classList.remove("active")
     }
 })
 
 form.addEventListener("submit", event => {
     event.preventDefault()
+
+    console.log(taskTitleInputCount, taskDescriptionInputCount);
 
 
     if (taskTitleInput.value.trim() === "" && taskDescriptionInput.value.trim() === "") {
@@ -127,6 +201,16 @@ form.addEventListener("submit", event => {
         formOverlay.classList.remove("active")
     }
 
+    if (taskDescriptionInput.value.trim().length > 250) {
+        pulseDescriptionWarning()
+        return
+    }
+
+    if (taskTitleInput.value.trim().length > 60) {
+        pulseTitleWarning()
+        return
+    }
+
     const formData = new FormData(form)
 
     const newTask = {
@@ -139,7 +223,10 @@ form.addEventListener("submit", event => {
     saveTasksState()
     refreshTaskView()
     form.reset()
-
+    countDesc.textContent = 0
+    countTitle.textContent = 0
+    taskTitleInputCount = 0
+    taskDescriptionInputCount = 0
 })
 
 // Switch to the active task list when the filter is clicked
@@ -232,16 +319,16 @@ function createTask() {
                 event.preventDefault()
 
                 if (newFormEdit.querySelector('[name="title-edit"]').value.trim() === "" && newFormEdit.querySelector('[name="description-edit"]').value.trim() === "") {
-                    return showCustomPopUp("Sorry, you can't add an empty task edit")
+                    return showCustomPopUp("Your task must have a title and a description")
                 }
 
                 if (newFormEdit.querySelector('[name="description-edit"]').value.trim() === "") {
-                    return showCustomPopUp("Sorry, you can't add a task without a description edit")
+                    return showCustomPopUp("Your task must have a title")
 
                 }
 
                 if (newFormEdit.querySelector('[name="title-edit"]').value.trim() === "") {
-                    return showCustomPopUp("Sorry, you can't add a task without a title edit")
+                    return showCustomPopUp("Your task must have a description")
                 }
 
                 const formData = new FormData(newFormEdit)
@@ -262,7 +349,7 @@ function createTask() {
         })
 
 
-        del.addEventListener("click", () => {
+        del.addEventListener("click", (event) => {
             const taskIndex = del.getAttribute("data-index")
             const confirmBtn = makeSure.querySelector("#confirm-delete")
 
@@ -363,7 +450,7 @@ function createCompletedTask() {
         taskCont.appendChild(tasksHouse)
 
         edit.addEventListener("click", () => {
-            showCustomPopUp("Completed tasks can't be deleted")
+            showCustomPopUp("Completed tasks can't be edited")
         })
 
         del.addEventListener("click", () => {

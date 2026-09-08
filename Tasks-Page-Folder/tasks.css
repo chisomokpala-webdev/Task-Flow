@@ -144,6 +144,8 @@ dialog[open] button {
     gap: 1.25rem;
 }
 
+
+
 .edit input,
 .edit textarea {
     border-radius: 0.375rem;
@@ -167,13 +169,21 @@ dialog[open] button {
     margin-bottom: 1.25rem;
 }
 
-.make-sure button {
+body .make-sure .btn-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.make-sure .btn-area button {
     padding: 0.625rem 1.25rem;
-    margin: 0 0.625rem;
     border: none;
     border-radius: 0.375rem;
     cursor: pointer;
     font-size: 1rem;
+    font-weight: 600;
 }
 
 .make-sure.active {
@@ -321,12 +331,38 @@ aside .input-field textarea {
     padding: 0.75rem 0.625rem;
 }
 
-aside .inputs {
+main aside .input-field .inputs {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1.25rem;
 }
+
+
+main aside .input-field .inputs .character-control-field {
+    display: flex;
+    font-size: 0.75rem;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    color: #2d3748;
+}
+
+main aside .input-field .inputs .character-control-field .title-warning {
+    display: none;
+    color: rgb(162, 0, 0);
+}
+
+main aside .input-field .inputs .character-control-field .desc-warning {
+    display: none;
+    color: rgb(162, 0, 0);
+}
+
+
+/* main aside .input-field .inputs .character-control-field.activ .warning{
+    display: block;
+} */
+
+
 
 aside .input-field .btn-area button {
     width: 100%;
@@ -342,18 +378,33 @@ aside .input-field .btn-area button {
     font-family: 'Caveat', cursive;
     transition: background-color 0.3s, transform 0.2s;
     animation: glow 3s infinite;
+    /* cursor: not-allowed; */
+}
+
+aside .input-field .btn-area.blocked {
+    cursor: not-allowed;
+}
+
+aside .input-field .btn-area.blocked button {
+    cursor: not-allowed;
+}
+
+.warning-pulse {
+    animation: warning-pulse 0.45s ease-in-out 1;
 }
 
 aside .input-field .btn-area button:hover {
     background-color: #3182ce;
+
 }
 
 aside .input-field .btn-area button:active {
     transform: scale(0.98);
 }
 
-aside .input-field p {
+aside .input-field .close {
     display: none;
+    margin-right: 100%;
 }
 
 /* =========================
@@ -361,6 +412,7 @@ aside .input-field p {
    ========================= */
 .tasks-section {
     flex: 3;
+    min-width: 0;
     min-height: 0;
     display: flex;
     flex-direction: column;
@@ -447,6 +499,7 @@ aside .input-field p {
 .tasks-section .tasks-container {
     background-color: #f7fafc;
     flex: 1;
+    min-width: 0;
     min-height: 0;
     overflow-y: auto;
     color: #2d3748;
@@ -513,7 +566,7 @@ aside .input-field p {
 
 .tasks-section .tasks-container .middle p {
     word-wrap: break-word;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     max-width: 100%;
     margin: 0.125rem 0;
 }
@@ -530,6 +583,7 @@ aside .input-field p {
     background-color: #edf2f7;
     padding: 0.1875rem;
     margin-top: 0.375rem;
+    line-height: 2;
 }
 
 .tasks-section .tasks-container .action-icons {
@@ -612,19 +666,30 @@ aside .input-field p {
     }
 }
 
+@keyframes warning-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
 
 @media screen and (max-width: 960px) and (max-height: 500px) {
+
+    body .make-sure .btn-area {
+        gap: 10px;
+    }
+
     .tasks-section {
         padding: 1rem;
     }
 
     main {
         flex-direction: column;
-    }
-
-    header .top {
-        flex-direction: column;
-        gap: 0.625rem;
     }
 
     /* Hide desktop aside, show mobile add button */
@@ -808,7 +873,12 @@ aside .input-field p {
     }
 }
 
+
 @media screen and (max-width: 768px) {
+
+    body .make-sure .btn-area {
+        gap: 10px;
+    }
 
     main .tasks-section .top-section .filters {
         gap: 1.25rem;
@@ -817,10 +887,6 @@ aside .input-field p {
     main .tasks-section .top-section {
         padding: 0;
     }
-
-    /* main .tasks-section .top-section .filters .filter-item {
-        font-size: 1.1rem;
-    } */
 
     main .tasks-section .tasks-container .action-icons {
         gap: 1.25rem;
@@ -843,10 +909,6 @@ aside .input-field p {
         flex-direction: column;
     }
 
-    header .top {
-        flex-direction: column;
-        gap: 0.625rem;
-    }
 
     /* Hide desktop aside, show mobile add button */
     aside {

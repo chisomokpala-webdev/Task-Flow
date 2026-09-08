@@ -23,16 +23,18 @@
          ========================= -->
     <div class="make-sure">
         <p>Are you sure you want to delete this task?</p>
-        <button id="confirm-delete">Yes</button>
-        <button id="cancel-delete">No</button>
+        <div class="btn-area">
+            <button id="confirm-delete">Yes</button>
+            <button id="cancel-delete">No</button>
+        </div>
     </div>
 
     <div class="overlay">
         <form class="edit">
             <p>✖</p>
             <div class="inputs">
-                <input type="text" name="title-edit" id="" placeholder="Title edit">
-                <textarea name="description-edit" id="" rows="10" placeholder="Description edit"></textarea>
+                <input type="text" name="title-edit" id="" placeholder="Title edit" maxlength="60">
+                <textarea name="description-edit" id="" rows="10" placeholder="Description edit" maxlength="250"></textarea>
             </div>
             <div class="btn-area">
                 <button type="submit">Edit</button>
@@ -69,15 +71,23 @@
 
         <aside>
             <form class="input-field">
-                <p>✖</p>
+                <p class="close">✖</p>
                 <h1>Add a new task</h1>
                 <div class="inputs">
                     <label for="">Task Title</label>
                     <input type="text" name="title" id="" placeholder="Task Title">
+                    <div class="character-control-field">
+                        <p class="title-character-count"><span id="countTitle">0</span>/60</p>
+                        <p class="title-warning">Title is too long</p>
+                    </div>
                 </div>
                 <div class="inputs">
                     <label for="">Task Description</label>
                     <textarea name="desc" id="" rows="10" placeholder="Task Description"></textarea>
+                    <div class="character-control-field">
+                        <p class="title-character-count"><span id="countDescription">0</span>/250</p>
+                        <p class="desc-warning">Description is too long</p>
+                    </div>
                 </div>
                 <div class="btn-area">
                     <button type="submit">Add Task</button>

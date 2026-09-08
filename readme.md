@@ -6,7 +6,7 @@ A simple and practical task management app built with HTML, CSS, and JavaScript.
 
 Open the app here:
 
-https://yourusername.github.io/your-repository-name/
+https://chisomokpala-webdev.github.io/Task-Flow/
 
 ## Features
 
